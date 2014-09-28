@@ -1,7 +1,7 @@
 
 @font-face {
     font-family: 'open24displayst';
-    src: url('../fonts/open24displayst.woff') format('woff');
+    src: url('../fonts/open24displayst.woff') format('woff'); url('../fonts/open24displayst.ttf') format('ttf');
     font-weight: normal;
     font-style: normal;
 }
@@ -20,17 +20,18 @@ body{
 .channelList div {
     border-bottom: 1px #2B2B2B solid;
     padding: 8px 12px;
-    background: #141414;
+    background: #535353;
     cursor: pointer;
 }
 
 .player {
-    height: 94px;
+    height: 80px;
 }
 .channelList {
     position: absolute;
-    top: 94px;
+    top: 110px;
     left:0;
     right: 0;
     bottom: 0;
+    overflow: auto;
 }
