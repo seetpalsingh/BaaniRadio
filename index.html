@@ -42,15 +42,23 @@
         </div>
         <!--    jplayer ends    -->
 
-        <div id="filters">
-            <a href="" ng-click="type='rec'; reverse = !reverse">Radio Channels</a>
-            <a href="" ng-click="type='live'; reverse = !reverse">Gurdwara Live</a>
-        </div>
         <div class="channelList">
-            <div ng-repeat="chnl in channels | filter:type:live" >
-                <span ng-click="playThis($index)">{{chnl.name}}</span>
-                <span class="star class="{{ chnl.fav ? 'fav' : '' }}""></span>
-            </div>
+            <table>
+                <thead>
+                    <tr class="filters">
+                        <th><a href="" ng-click="type='rec'; reverse = !reverse">Radio ↕</a></th>
+                        <th><a href="" ng-click="type='live'; reverse = !reverse">Live ↕</a></th>
+<!--                        <th ><a href="" ng-click="fav='true'" class="star {{bing ? '' : 'fav'}}" ></a></th> -->
+                        <th ><span class="star fav" ></span></th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr ng-repeat="chnl in channels | filter:type:live" class="{{ chnl.fav ? 'fav' : '' }}" >
+                        <td colspan="2"><span ng-click="playThis($index)">{{chnl.name | truncate:22}}</span></td>
+                        <td><span ng-click="chnl.fav = !chnl.fav" class="star {{ chnl.fav ? 'fav' : '' }}"></span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <!--    player list ends    -->
 
@@ -62,5 +70,6 @@
 <script src="js/playercall.js"></script>
 <script src="js/angular.js"></script>
 <script src="js/apps.js"></script>
+<script src="js/filters.js"></script>
 
 </html>

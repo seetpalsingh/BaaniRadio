@@ -37,6 +37,12 @@ Oradio.controller('channelList', function($scope){
 
     $scope.type = 'rec';
 
+    $scope.set_fav  = function (index) {
+
+        $scope.channels[index].fav = true;
+
+    }
+
     $scope.getDatetime = function() {
         var d = new Date();
         var curr_hour = d.getHours();

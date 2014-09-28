@@ -668,13 +668,3 @@ div.jp-jplayer {
 	font-weight:bold;
 }
 /* @end */
-
-
-.star:before{
-    content: 'sd';
-    padding-left: 20px;
-    height: 20px;
-}
-.star.fav{
-
-}

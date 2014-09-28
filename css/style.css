@@ -16,17 +16,26 @@ body{
     margin: 0;
     overflow: hidden;
 }
-
-.channelList div {
+table{
+    border-collapse: collapse;
+    width: 100%;
+}
+.channelList th {
+    font-weight: normal;
+    text-align: center;
+}
+.channelList th *{
+    display: block;
+}
+.channelList td {
     border-bottom: 1px #2B2B2B solid;
     padding: 8px 12px;
     background: #535353;
+}
+.channelList span{
     cursor: pointer;
 }
 
-.player {
-    height: 80px;
-}
 .channelList {
     position: absolute;
     top: 110px;
@@ -35,3 +44,36 @@ body{
     bottom: 0;
     overflow: auto;
 }
+
+.player {
+    height: 80px;
+}
+
+.star {
+}
+.star:before{
+    content: '☆';
+    height: 20px;
+}
+.star.fav:before{
+    content: '★';
+}
+.filters {
+}
+.filters span{
+    cursor: pointer;
+}
+.filters span, .filters a {
+    background: #555;
+    display: block;
+    padding: 5px;
+    border-bottom: 1px #9B9B9B solid;
+    box-sizing: border-box;
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+}
+.filters a + a {
+    border-left: 1px #9B9B9B solid;
+}
+.fav td{ color: #fff; }
