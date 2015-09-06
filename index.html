@@ -1,388 +1,51 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-    <meta charset="utf-8">
-    
-    <title>Baani Radio</title>
-    
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/res.css" rel="stylesheet">
-    
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<meta charset="utf-8">
+
+	<title>Baani Radio</title>
+
+	<link href="assets/vendors/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/css/font-awesome.min.css" rel="stylesheet" />
+
+	<link href="assets/css/style.css" rel="stylesheet">
+	<link href="assets/css/res.css" rel="stylesheet">
+
+	<script src="cordova.js"></script>
+
+	<script src="assets/vendors/js/jquery.js"></script>
+	<script src="assets/vendors/js/angular.min.js"></script>
+	<script src="assets/vendors/js/jquery.jplayer.min.js"></script>
+
+	<script src="assets/app/app.js"></script>
+
+	<script src="assets/controller/play-list.js"></script>
+	<script src="assets/controller/player-api.js"></script>
+	<script src="assets/controller/main.js"></script>
+
+	<script src="assets/services/services.js"></script>
+
+	<script src="assets/directives/directives.js"></script>
 </head>
 
-<body ng-app="Bradio"  ng-controller="mainctrl">
+<body ng-app="Bradio" ng-controller="mainctrl">
+  <div class="main-container">
+  
+	<player-api></player-api>
 
-<div class="main-container">
-    
-    <div id="player">
-    
-        <div id="jquery_jplayer_1" class="jp-jplayer"></div>
-
-        <div id="jp_container_1" class="jp-audio" >
-        
-                    <img id="myd">
-        
-            <table class="play-control" width="200" border="0">
-              <tr class="jp-gui ">
-                <td>&nbsp;</td>
-                <td class="jp-volume-controls">
-                    <button class="jp-mute" role="button" ><img src="list-data/mute.png"></button>
-                    <button class="jp-volume-max" role="button" ><img src="list-data/full-vol.png"></button> 
-                </td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr class="jp-controls" >
-                <td>
-                    <button ng-click="stopIt()" role="button" ><img src="list-data/stop.png"></button>
-                </td>
-                <td class="center-btn">
-                    <img id="thumb" src="list-data/thumb.jpg">
-                    <button role="button" class="jp-play"><img src="list-data/play.png"></button>
-                    <button role="button" class="jp-pause"><img src="list-data/pause.png"></button> 
-                    <button role="button" class="seeker"><img src="list-data/725.gif"></button> 
-                </td>
-                <td>
-                    <button role="button"  ng-click="listed = !listed" class="list-btn"><img src="list-data/list.png" ></button>
-                </td>
-              </tr> 
-              <tr class="jp-gui jp-interface" > 
-                <td colspan="3" >
-                    <div class="jp-time-holder">
-                        <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
-                    </div>
-                    <div class="jp-gui "> 
-                        <div class="jp-details">
-                            <div aria-label="title" class="play-title">{{playtitle}}</div>
-                            <div>{{loc}}</div>
-                        </div>
-                    </div>
-                </td>
-              </tr>
-            </table>
-        
-                
-             
-        </div>
-        
-    </div>	<!--	player ends	-->
-    
-    
     <div id="playlist" ng-class="{go_away : listed }">
-    
-        <div class="tabs">
-            <div ng-click="listed = !listed"><img src="list-data/back.png" ></div>
-            <div  ng-hide="offline" ng-class="{now: type == 'live'}" ng-click="type='live'; reverse = !reverse"><img src="list-data/live.png"></div>
-            <div  ng-hide="offline" ng-class="{now: type == 'rec'}" ng-click="type='rec'; reverse = !reverse" ><img src="list-data/radio.png"></div>
-            <div  ng-hide="offline || kirtanList" ng-class="{now: type == ''}" ng-click="type=''; reverse = !reverse"><img src="list-data/all.png"></div>
-            <div  ng-show="kirtanList" ng-class="{now: type == ''}" ng-click="type=''; reverse = !reverse"><img src="list-data/kirtan.png"></div>
-          </div><!--	tabs	-->
-    
-        <div class="list" ng-hide="offline">
-    
-                <!-- 
-            <tr ng-repeat="chnl in channels | filter:type:live" class="{{ chnl.fav ? 'fav' : '' }}" >
-                <td colspan="2"><span ng-click="playThis($index)">{{chnl.name | truncate:22}}</span></td>
-                <td width="45"><span ng-click="info($index)" ng-show="chnl.desc" class="star "></span></td>
-            </tr>
-                -->
-        
-            <div class="gurdwara" ng-repeat="chnl in playlist | filter:type:live">
-                <div class="title" ng-click="playThis(chnl)">{{chnl.name | truncate:22}}</div>
-                <div class="desc">{{chnl.desc}}</div>
-            </div>
-            <div class="gurdwara hide">
-                <div class="title">Hazoor Sahib</div>
-                <div class="desc">I am very happy to inform you.<br/>Contacted the bank here with the above account in</div>
-            </div>
-        </div><!--	playlist ends		-->
-    
-    	<div id="about" ng-show="offline">
-        
-            <div class="about-page">
-                <div><a href="http://codemode.in"><img src="img/code-mode.png" width="150"></a> </div>
-                <br/>
-                <div>Version 1.0</div>
-                <div>&copy;{{dt | date:'yyyy'}} codemode.in</div>
-                <div><a href="#" onClick="return false; window.open('http://www.wikipedia.org','_system','location=yes');" >Send Feedback on codemode.in</a></div>
-                <div>Tell us what you think</div>
-                <br/>
-                <div><a onclick="return false;" href="#">Report a Problem</a></div>
-                <div>Let us know about a bug/problem</div>
-                <hr>
-                <div>This app is built with an idea that GooD thoughts should be shared</div>
-                <hr>
-                <div class="alert alert-danger" role="alert" style="display:{{offline ? 'block!important' : 'none'}}">Check your internet Connection for playlist</div>
-            </div>
-            
-		</div><!--	about ends	-->
-    
-    </div>	<!--	list menu ends	-->
-    
-</div>
-
-
-<!-- Small modal -->
-<button type="button" id="alert_box" class="btn btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button>
-
-<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="fa fa-remove"></span></button>
-                <h3></h3>
-            </div>
-            <div class="modal-body">
-                <div align="center">
-                {{msg}}
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-        </div>
+	
+      <play-list></play-list>
+	  
+	  <about-us></about-us>
+      
     </div>
-</div>
-
-
-<script type="text/javascript" src="js/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/angular.min.js"></script>
-<script src="js/jquery.jplayer.min.js"></script>
-<script src="js/app.js"></script>
-
-<script>
 	
-	
-    // Call onDeviceReady when Cordova is loaded.
-    //
-    // At this point, the document has loaded but cordova-1.7.0.js has not.
-    // When Cordova is loaded and talking with the native device,
-    // it will call the event `deviceready`.
-    //
-        document.addEventListener("deviceready", onDeviceReady, false);
+  </div>
+  
+  <msg-box></msg-box>
 
-    // Cordova is loaded and it is now safe to make calls Cordova methods
-    //
-    function onDeviceReady() {
-        // Register the event listener
-        document.addEventListener('menubutton', showMenu, false);
-    }
-
-    // Handle the menu button
-    //
-    function showMenu() {
-        var menu = document.getElementById( 'bt-menu' );
-        if( $('#playlist').hasClass('.go_away') ) {
-            $('#playlist').removeClass('go_away');
-        }
-        else {
-            $('#playlist').addClass('go_away');
-        }
-    }
-
-
-
-
-	var baani	=	angular.module('Bradio',[]);
-		
-	baani.controller('mainctrl',['$scope', '$http', function ($scope, $http) {
-
-		$scope.msg  =   'No Interner available';	//	messanger box information
-
-	    $scope.dt = new Date();	//	copyright dated
-		
-		function alertBox(data) {
-			$scope.msg    =   data;
-			$('#alert_box').click();
-		}
-	
-		$http.get('http://codemode.in/dev/upstairs/wp-admin/admin-ajax.php?action=channels').
-			success(function (data) {
-		        console.log(data);
-//				$scope.offline = false;
-				$scope.playlist =   data;
-				window.localStorage.setItem("play_data", JSON.stringify(data));
-			}).error(function (e) {
-//				$scope.offline = true;
-				alertBox('Unable to connect Internet');
-		        console.log(e);
-			}
-		);
-
-		$scope.playlist	=	[	//	channels list
-			{type:'rec', name:"All Gurbani Styles ", path:"http://radio2.sikhnet.com:8010/autodj", desc:"All gurbani style kirtan"},
-			{type:'rec', name:"Classical Raag", path:"http://radio2.sikhnet.com:8014/autodj", desc: "From my Soul", loc: "From my Soul"},
-			{type:'rec', name:"Simran ", path:"http://radio2.sikhnet.com:8016/autodj"},
-			{type:'rec', name:"Sri Akhand Paath Sahib ", path:"http://radio2.sikhnet.com:8018/autodj"},
-			{type:'rec', name:"The Classics ", path:"http://radio2.sikhnet.com:8501/autodj"},
-			{type:'rec', name:"Katha ", path:"http://radio2.sikhnet.com:8013/autodj"},
-			{type:'rec', name:"Sakhian ", path:"http://radio2.sikhnet.com:8017/autodj"},
-			{type:'live', name:"Harimandir Sahib", path:"http://radio2.sikhnet.com:8020/live"},
-			{type:'live', name:"Dukh Niwaran Sahib ", path:"http://radio2.sikhnet.com:8022/live"},
-			{type:'live', name:"Takhat Hazur Sahib ", path:"http://radio2.sikhnet.com:8038/live"},
-			{type:'live', name:"Dasmesh Darbar", path:"http://radio2.sikhnet.com:8036/live"},
-			{type:'live', name:"Dukh Nivaran Sahib ", path:"http://radio2.sikhnet.com:8037/live"},
-			{type:'live', name:"Fremont ", path:"http://radio2.sikhnet.com:8026/live"},
-			{type:'live', name:"Dashmesh Culture Center", path:"http://radio2.sikhnet.com:8030/live"},
-			{type:'live', name:"Guru Nanak Sikh Gurdwara", path:"http://radio2.sikhnet.com:8034/live"},
-			{type:'live', name:"Gurdwara San Jose", path:"http://radio2.sikhnet.com:8031/live"},
-			{type:'live', name:"Western Singh Sabha", path:"http://radio2.sikhnet.com:8029/live"},
-			{type:'live', name:"Sukh Sagar", path:"http://radio2.sikhnet.com:8023/live"},
-			{type:'live', name:"Hacienda De Guru Ram Das", path:"http://radio2.sikhnet.com:8024/live"},
-			{type:'live', name:"Singh Sabha Washington", path:"http://radio2.sikhnet.com:8032/live"},
-			{type:'live', name:"Singh Sabha Surrey", path:"http://radio2.sikhnet.com:8033/live"},
-			{type:'live', name:"Gurdwara SW Houston", path:"http://radio2.sikhnet.com:8035/live"},
-			{type:'live', name:"Siri Guru Singh Sabha", path:"http://radio2.sikhnet.com:8040/live"},
-			{type:'live', name:"Sacramento Sikh Society", path:"http://radio2.sikhnet.com:8041/live"},
-			{type:'live', name:"Nanak Naam Jahaj", path:"http://radio2.sikhnet.com:8042/live"},
-			{type:'live', name:"El Sobrante", path:"http://radio2.sikhnet.com:8043/live"},
-			{type:'live', name:"Stockton Sikh Temple", path:"http://radio2.sikhnet.com:8045/live"},
-			{type:'live', name:"Sri Guru Singh Sabha Malton", path:"http://radio2.sikhnet.com:8039/live"},
-			{type:'live', name:"Gurdwara Sahib West Sacramento", path:"http://radio2.sikhnet.com:8019/live"},
-			{type:'live', name:"Gurdwara Sahib Glenwood", path:"http://radio2.sikhnet.com:8047/live", loc: 'California'}
-		];
-		
-		$scope.kirtanList	=	[
-			{type:'live', name:"Gurdwara Sahib West Sacramento", path:"http://radio2.sikhnet.com:8019/live"}
-		]
-
-		$scope.type = 'rec';	//	filter for playlist 'live, radio, all'
-		
-		$scope.loc	=	'From my Soul';	//	location of playing channel
-		$scope.playtitle	=   'Play from Playlist';	//	current playing title
-
-//		$scope.playtitle    =   'Select to play';			
-				
-		function resetApp() {	//		clear playing media and set new channel on air
-//			$scope.playtitle    =   'Select to play';
-//			$scope.$apply();
-			$("#jquery_jplayer_1").jPlayer("destroy");
-		}
-	
-		$scope.playThis =   function(id){
-			resetApp();
-	//        JP.jPlayer("stop");
-			$scope.playing	=   $scope.playlist[$scope.playlist.indexOf(id)];
-			$scope.playtitle	=   $scope.playing.name;
-			$scope.loc	=	$scope.playing.loc;
-			changeMedia($scope.playing.path, 'play');
-			$scope.listed	=	true;
-		}
-		
-		$scope.stopIt	=	function(){
-			changeMedia($scope.playing.path, stop);
-		}
-	
-		function changeMedia(data, toDo){
-	//        console.log(data);
-	//        unset();
-			var JP = $("#jquery_jplayer_1"); var JPdata  =   JP.data('jPlayer');
-		if(toDo == 'play'){
-			JP.jPlayer({
-				ready: function() { // The $.jPlayer.event.ready event
-					JP.jPlayer('setMedia', {mp3:data}).jPlayer('play');
-	//                $("#msgr").css('display','none');
-				}
-			});
-		}
-		else{
-			JP.jPlayer("destroy");
-			JP.jPlayer({
-				ready: function() { // The $.jPlayer.event.ready event
-					JP.jPlayer('setMedia', {mp3:data});
-	//                $("#msgr").css('display','none');
-				}
-			});
-		}
-	
-			JP.bind($.jPlayer.event.canplay, function() {
-				console.log('asdf');
-//				alertBox('canplay');
-			});
-			
-			$("#jpId").bind($.jPlayer.event.error + ".msg", function(event) { // Using ".myProject" namespace
-			  alertBox("Error Event: type = " + event.jPlayer.error.type);
-			});
-	
-		}
-		
-		$("#jquery_jplayer_1").jPlayer({
-			ready: function (event) {
-				$(this).jPlayer("setMedia", {
-//						title: "Kalimba",
-	//				m4a: "http://jplayer.org/audio/m4a/Miaow-07-Bubble.m4a",
-					mp3: "Kalimba.mp3",
-	//				mp3: 'http://radio2.sikhnet.com:8026/live'
-				});
-			},
-			timeupdate: function(event) { // 4Hz
-			  // Restrict playback to first 60 seconds.
-			  if (event.jPlayer.status.currentTime > 60) {
-//					 $(this).jPlayer('stop');
-			  }
-			},
-			// Then other options, such as: ready, swfPath, supplied and so on.
-			supplied: "mp3",
-			wmode: "window",
-			useStateClassSkin: true,
-			autoBlur: false,
-			smoothPlayBar: true,
-			keyEnabled: false,
-			remainingDuration: false,
-			toggleDuration: true,
-/*				cssSelector: {
-			  videoPlay: ".jp-video-play",
-			  play: ".jp-play",
-			  pause: ".jp-pause",
-			  stop: ".jp-stop",
-			  seekBar: ".jp-seek-bar",
-			  playBar: ".jp-play-bar",
-			  mute: ".jp-mute",
-			  unmute: ".jp-unmute",
-			  volumeBar: ".jp-volume-bar",
-			  volumeBarValue: ".jp-volume-bar-value",
-			  volumeMax: ".jp-volume-max",
-			  playbackRateBar: ".jp-playback-rate-bar",
-			  playbackRateBarValue: ".jp-playback-rate-bar-value",
-			  currentTime: ".jp-current-time",
-			  duration: ".jp-duration",
-			  title: ".jp-title",
-			  fullScreen: ".jp-full-screen",
-			  restoreScreen: ".jp-restore-screen",
-			  repeat: ".jp-repeat",
-			  repeatOff: ".jp-repeat-off",
-			  gui: ".jp-gui",
-			  noSolution: ".jp-no-solution"
-			}		*/
-		});
-	}]);
-	
-	/**
-		 * Created by demo on 28-Sep-14.
-	 */
-	
-	baani.filter('truncate', function () {
-		return function (text, length, end) {
-	
-			if (end === undefined)
-				end = "...";
-	
-	
-			if(text.length >= length){
-				return String(text).substring(0, length-end.length) + end;
-			}
-			else{
-				return text;
-			}
-	
-	
-		};
-	});
-
-</script>
 </body>
 </html>
