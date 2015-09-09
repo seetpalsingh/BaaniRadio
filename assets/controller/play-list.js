@@ -1,4 +1,4 @@
-baani.controller('play-list', function($scope, $http){
+baani.controller('play-list', function($scope, $http, fetchlist){
 
 	$scope.got_list	=	false;
 
@@ -9,38 +9,22 @@ baani.controller('play-list', function($scope, $http){
 		return	'';
 	};
 	
-	var	last_month	=	window.localStorage.getItem("last_month");
-	var	play_data	=	window.localStorage.getItem("play_data");
-	var	play_data	=	JSON.parse(play_data);
-	
-	//console.log($scope.mm	+ ' , ' + last_month + ' , ' + play_data);
-	
-	$scope.fetch_list	=	function(){
-		$http.get('http://blog.codemode.in/wp-admin/admin-ajax.php?action=channels').
-			success(function (data) {
-				//console.log('received');
-				$scope.playlist =   data;
-				window.localStorage.setItem("play_data", JSON.stringify(data));
-				last_month	=	window.localStorage.setItem("last_month", $scope.mm);
-			});
-	};
-	
-	if($scope.mm	+ ' , ' + last_month &&	!play_data){		//	get list if its 
-		$scope.fetch_list();
-	}
-	else{
-		//console.log('loaded-local');
-		$scope.playlist	=	play_data;
-	};
-	
+//	$scope.updateList	=	function(){
+		fetchlist.getthelist().then(function(data) {
+			$scope.playlist = data;
+		});
+//	}
 	
 	document.addEventListener("offline", onOffline, false);
 	document.addEventListener("online", available, false);
 	
 	function available() {
-			//$scope.inform('online');
-			$scope.offline = false;
-			$scope.$apply();
+		//$scope.inform('online');
+		fetchlist.getthelist().then(function(data) {
+			$scope.playlist = data;
+		});
+		$scope.offline = false;
+		$scope.$apply();
 	};
 	
 	function onOffline() {

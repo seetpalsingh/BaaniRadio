@@ -3,7 +3,7 @@ function onDeviceReady() {
 	document.addEventListener('menubutton', showMenu, false);
 }
 function showMenu() {
-	if( document.getElementById('playlist').length ) {
+	if( document.getElementsByClassName("go_away").length ) {
 		document.getElementById('playlist').className	=	'';
 	}
 	else {

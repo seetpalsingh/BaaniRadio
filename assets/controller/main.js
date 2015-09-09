@@ -6,7 +6,7 @@ baani.controller('mainctrl', function ($scope) {
 	$scope.shareme	=	function(){};
 
 	$scope.dt = new Date(); 
-	$scope.mm = $scope.dt.getMonth(); 
+//	$scope.mm = $scope.dt.getMonth(); 
 	
 	$scope.alertBox	=	function(data) {
 		$scope.msg    =   data;
@@ -16,10 +16,10 @@ baani.controller('mainctrl', function ($scope) {
 		window.plugins.toast.showLongBottom(info);
 	}
 	
-	$scope.playlist	=	[ ];
-	$scope.type = 'rec'; 
+	$scope.playlist	=	[];
+	$scope.type = 'rec';
 	
-	$scope.loc	=	'From my Soul'; 
+	$scope.loc	=	'From my Soul';
 	$scope.playtitle	=   'Play from Playlist';
 	
 	
