@@ -1,0 +1,21 @@
+  <div class="tabs" ng-hide="offline">
+	<div ng-click="listed = !listed"><img src="assets/list-data/back.png"></div>
+	<div class="cover">
+	  <div ng-hide="offline" ng-class="{now: type == 'live'}" ng-click="type='live'; reverse = !reverse"><img src="assets/list-data/live.png"></div>
+	  <div ng-hide="offline" ng-class="{now: type == 'rec'}" ng-click="type='rec'; reverse = !reverse"><img src="assets/list-data/radio.png"></div>
+
+	  <div ng-hide="offline || kirtanList" ng-class="{now: type == ''}" ng-click="type=''; reverse = !reverse"><img src="assets/list-data/all.png"></div>
+	</div>
+  </div><!--	tabs ends here	-->
+
+  <div class="list" ng-hide="offline">
+	<div class="gurdwara" ng-class='actived(chnl)' ng-repeat="chnl in playlist | filter:type:lived | orderBy: 'name'">
+	  <div class="title" ng-click="playThis(chnl)">
+		{{chnl.name}}
+	  </div>
+	  <div class="desc">
+		{{chnl.desc}}
+	  </div>
+	</div>
+  </div>
+  <!--	playlist ends here	-->

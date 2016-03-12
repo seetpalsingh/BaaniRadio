@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+	<meta charset="utf-8">
+
+	<title>Baani Radio</title>
+
+	<link href="assets/vendors/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendors/css/font-awesome.min.css" rel="stylesheet" />
+
+	<link href="assets/css/style.css" rel="stylesheet">
+	<link href="assets/css/res.css" rel="stylesheet">
+
+	<script src="cordova.js"></script>
+
+	<script src="assets/vendors/js/jquery.js"></script>
+	<script src="assets/vendors/js/angular.min.js"></script>
+	<script src="assets/vendors/js/jquery.jplayer.min.js"></script>
+
+	<script src="assets/app/app.js"></script>
+
+	<script src="assets/controller/play-list.js"></script>
+	<script src="assets/controller/player-api.js"></script>
+	<script src="assets/controller/main.js"></script>
+
+	<script src="assets/factory/factory.js"></script>
+
+	<script src="assets/directives/directives.js"></script>
+</head>
+
+<body ng-app="Bradio" ng-controller="mainctrl">
+  <div class="main-container">
+  
+	<player-api></player-api>
+
+    <div id="playlist" ng-class="{go_away : listed }">
+	
+      <play-list></play-list>
+	  
+	  <about-us></about-us>
+      
+    </div>
+	
+  </div>
+  
+  <msg-box></msg-box>
+
+</body>
+</html>
